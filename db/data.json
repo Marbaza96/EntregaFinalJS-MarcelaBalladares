@@ -4,63 +4,63 @@
         "id": 1,
         "nombre": "Lector FreeStyle Libre 2",
         "precio": 3300,
-        "img": "./img/freestyle-lector.jpg",
+        "img": "../img/freestyle-lector.jpg",
         "info": "El lector FreeStyle Libre 2 permite ver los datos recopilados por el sensor Freestyle Libre 2 Plus, ofreciendo información completa, con alarmas personalizables. Monitoreo Continuo de Glucosa."
     },
     {
         "id": 2,
         "nombre": "Sensor FreeStyle 2",
         "precio": 2736,
-        "img": "./img/sensor-freestyle2.jpg",
+        "img": "../img/sensor-freestyle2.jpg",
         "info": "El sensor FreeStyle Libre 2 Plus es compatible con el lector FreeStyle Libre 2 (color azul). Puede comprobar su nivel de glucosa en cualquier momento y en cualquier lugar."
     },
     {
         "id": 3,
         "nombre": "AccuChek Active Kit",
         "precio": 2990,
-        "img": "./img/accuchek-active-kit.jpg",
+        "img": "../img/accuchek-active-kit.jpg",
         "info": "Glucómetro que permite mediciones rápidas y efectivas en solo 5 segundos. Es ideal para pacientes que requieren control regular de su nivel de glucosa en sangre."
     },
     {
         "id": 4,
         "nombre": "Tiras AccuChek",
         "precio": 1300,
-        "img": "./img/tiras-accuchek.jpg",
+        "img": "../img/tiras-accuchek.jpg",
         "info": "Tiras Accu-Chek x25 unidades. Indicado para el autocontrol de la glucosa en sangre, es esencial para pacientes diabéticos que requieren mediciones periódicas."
     },
     {
         "id": 5,
         "nombre": "Sensor Sibionics",
         "precio": 3350,
-        "img": "./img/sibionics-sensor.jpg",
+        "img": "../img/sibionics-sensor.jpg",
         "info": "Sensor Sibionics con tecnología avanzada para monitoreo continuo de glucosa en sangre. Ideal para pacientes diabéticos que necesitan un control constante de su nivel de azúcar."
     },
     {
         "id": 6,
         "nombre": "Tiras Optium Freestyle",
         "precio": 1100,
-        "img": "./img/tiras-optium-freestyle.jpg",
+        "img": "../img/tiras-optium-freestyle.jpg",
         "info": "Tiras Optium Freestyle x25 unidades. Diseñados para la determinación de glucosa en sangre capilar, permiten realizar pruebas de glucemia de manera rápida y precisa."
     },
     {
         "id": 7,
         "nombre": "Agujas BD Ultrafine",
         "precio": 3175,
-        "img": "./img/agujas-bd-ultrafine.jpg",
+        "img": "../img/agujas-bd-ultrafine.jpg",
         "info": "Agujas x100 unidades, de 4mm y 31G para una administración precisa de insulina."
     },
     {
         "id": 8,
         "nombre": "Agujas Novofine",
         "precio": 3462,
-        "img": "./img/agujas-novofine.jpg",
+        "img": "../img/agujas-novofine.jpg",
         "info": "Agujas x100 unidades, de 8mm y 30G para una administración precisa de insulina en mayor profundidad."
     },
     {
         "id": 9,
         "nombre": "Parches Sensor Freestyle",
         "precio": 220,
-        "img": "./img/parches-sensor-freestyle.jpg",
+        "img": "../img/parches-sensor-freestyle.jpg",
         "info": "Pack x 10 Protectores autoadhesivos para sensor Freestyle Libre 1 y 2. Hipoalergénico, fabricado en algodón."
     }
 ]

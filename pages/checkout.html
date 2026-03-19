@@ -1,17 +1,24 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Envíos de Compra | Glucon</title>
+    <title>Checkout | Glucon</title>
 
     <!-- LINK a CSS -->
     <link rel="stylesheet" href="../css/styles.css">
 
-    <!--LINK a JS -->
-    <script defer src="../js/main.js"></script>
+    <!-- LIBRERIA SWEETALERT -->
+     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- LINK a JS -->
+    <script defer src="../js/carrito.js"></script>
 </head>
+
 <body>
+
+    <!-- HEADER DEL CHECKOUT -->
     <header class="header">
         <!-- SECCION HEADER -->
         <section class="header-section">
@@ -23,14 +30,13 @@
 
             <!-- NAV MENU -->
             <div class="div-nav">
-
                 <nav>
                     <ul>
                         <li>
                             <a href="../index.html">HOME</a>
                         </li>
                         <li>
-                            <a href="./carrito.html">CARRITO</a>
+                            <a href="./carrito.html">MI CARRITO</a>
                         </li>
                     </ul>
                 </nav>
@@ -38,40 +44,151 @@
         </section>
     </header>
 
+    <!-- MAIN DEL CHECKOUT -->
     <main id="main-checkout">
 
-        <!-- SECCION ENVIOS -->
+        <h1 class="page-title">CHECKOUT</h1>
 
-        <h1 class="page-title">ENVÍOS</h1>
+        <section class="checkout-layout">
 
-        <section class="checkout-section">
+            <!-- COLUMNA IZQ. : FORMULARIOS -->
+            <form id="checkout-form" class="checkout-form">
 
-            <!-- TITULO E INFO DEL CHECKOUT -->
-            <h2 class="checkout-subtitle">¿A dónde se dirige su pedido?</h2>
-            <p class="checkout-text">
-                Montevideo (costo de envío: <strong>$0 UYU</strong>) |
-                Interior del país (costo de envío: <strong>$250 UYU</strong>).
-            </p>
+                <!-- FORMULARIO DATOS DEL COMPRADOR -->
+                <div class="checkout-buyers">
 
-            <!-- SELECTOR DEL DESTINO -->
-            <div class="checkout-selector">
-                <p>Elige tu destino:</p>
-                <select id="checkout-options">
-                    <option value=""selected disabled>Seleccionar destino</option>
-                    <option value="montevideo" data-shipping="0">Montevideo</option>
-                    <option value="interior" data-shipping="250">Interior del país</option>
-                </select>
-            </div>
+                    <h2 class="page-subtitle">Datos del comprador</h2>
 
-            <!-- SUBTOTAL Y TOTAL DEL ENVÍO -->
-             <div class="checkout-resume">
-                <p>Subtotal: $ <span id="subtotal">0</span> UYU</p>
-                <p>Costo de envío: $ <span id="shipping">0</span> UYU</p>
-                <p>Total: $ <span id="total">0</span> UYU</p>
-             </div>
+                    <!-- CAMPOS A RELLENAR -->
+                    <label for="buyer-name">Nombre</label>
+                    <input type="text" id="buyer-name" name="nombre" required title="Solo se permiten letras"
+                        pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+" placeholder="Escribe tu nombre aquí">
 
-             <!--BTN REDIRIGIRSE A PAGAR  -->
-             <button id="btn-pay" type="button">Redirigirse a pagar</button>
+                    <label for="buyer-lastname">Apellido</label>
+                    <input type="text" id="buyer-lastname" name="apellido" required title="Solo se permiten letras"
+                        pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+" placeholder="Escribe tu apellido aquí">
+
+                    <label for="buyer-email">Correo electrónico</label>
+                    <input type="email" id="buyer-email" name="email" required placeholder="Ej: glucon@gmail.com">
+
+                    <label for="buyer-phone">Teléfono</label>
+                    <input type="text" id="buyer-phone" name="numero" inputmode="numeric" required
+                        pattern="[0-9]{8,15}" title="Solo se permiten números" placeholder="Ej: 099123456">
+                </div>
+
+                <!-- FORMULARIO DATOS DE ENVÍO -->
+                <div class="checkout-shipping">
+
+                    <h2 class="page-subtitle">Datos de envío</h2>
+
+                    <!-- TEXTO FORMULARIO DE ENVIO -->
+                    <p class="shipping-text">
+                        Montevideo: <strong>$0 UYU</strong> |
+                        Interior del país: <strong>$250 UYU</strong>
+                    </p>
+
+                    <!-- SELECCION DEL DEPARTAMENTO -->
+                    <label for="shipping-depto">Departamento</label>
+                    <select name="departamento" id="shipping-depto" required>
+                        <option value="" selected disabled>Seleccionar departamento</option>
+                        <option value="Montevideo">Montevideo</option>
+                        <option value="Interior">Maldonado</option>
+                        <option value="Interior">Rocha</option>
+                        <option value="Interior">Lavalleja</option>
+                        <option value="Interior">Florida</option>
+                        <option value="Interior">San José</option>
+                        <option value="Interior">Colonia</option>
+                        <option value="Interior">Durazno</option>
+                        <option value="Interior">Tacuarembó</option>
+                        <option value="Interior">Salto</option>
+                    </select>
+
+                    <!-- SELECCION DE LA CIUDAD -->
+                    <label for="shipping-city">Ciudad</label>
+                    <input type="text" id="shipping-city" name="ciudad" required placeholder="Ej: Minas">
+
+                    <!-- DIRECCION DEL ENVIO -->
+                    <label for="shipping-address">Dirección</label>
+                    <input type="text" id="shipping-address" name="direccion" required
+                        placeholder="Ej: Av Roosvelt 1234, apto 201">
+
+                    <!-- CAMPO DE INFORMACION ADICIONAL -->
+                    <label for="shipping-msj">Información adicional</label>
+                    <textarea name="info_adicional" id="shipping-msj" rows="3"
+                        placeholder="Escribe aquí datos adicionales para la entrega a domicilio..."></textarea>
+
+                </div>
+
+                <!-- FORMULARIO DATOS DE PAGO/TARJETA -->
+                <div class="checkout-payment">
+                    <h2 class="page-subtitle">Datos de pago</h2>
+
+                    <!-- NUMERO DE TARJETA -->
+                    <label for="card-number">Número de tarjeta</label>
+                    <input type="text" id="card-number" name="tarjeta" required inputmode="numeric" maxlength="16"
+                        pattern="[0-9]{16}" title="Debe contener 16 números" placeholder="Ej: 1234123412341234">
+
+                    <!-- FECHA DE EXPIRACIÓN -->
+                    <label>Fecha de expiración</label>
+
+                    <div class="card-expiry">
+
+                        <select id="card-exp-month" name="exp_month" required>
+                            <option value="" disabled selected>Mes</option>
+                            <option value="01">01</option>
+                            <option value="02">02</option>
+                            <option value="03">03</option>
+                            <option value="04">04</option>
+                            <option value="05">05</option>
+                            <option value="06">06</option>
+                            <option value="07">07</option>
+                            <option value="08">08</option>
+                            <option value="09">09</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                        </select>
+
+                        <select id="card-exp-year" name="exp_year" required>
+                            <option value="" disabled selected>Año</option>
+                            <option value="2026">2026</option>
+                            <option value="2027">2027</option>
+                            <option value="2028">2028</option>
+                            <option value="2029">2029</option>
+                            <option value="2030">2030</option>
+                        </select>
+
+                    </div>
+
+                    <!-- CODIGO CVV DE LA TARJETA-->
+                    <label for="card-cvv">CVV</label>
+                    <input type="text" id="card-cvv" name="cvv" required inputmode="numeric" maxlength="3"
+                        pattern="[0-9]{3}" title="Debe contener 3 números" placeholder="Ej: 123">
+                </div>
+
+                <!-- BTN VOLVER AL CARRITO, CONFIRMAR PAGO Y RESET -->
+                <div class="checkout-actions">
+                    <a class="checkout-btn-back" href="./carrito.html">Volver al carrito</a>
+                    <button id="checkout-btn-reset" type="reset">Resetear</button>
+                    <button id="checkout-btn-pay" type="submit">Confirmar la compra</button>
+                </div>
+
+            </form>
+
+            <!-- COLUMNA DER. : RESUMEN DEL CARRITO -->
+            <aside class="checkout-summary">
+                <h2 class="page-subtitle">Resumen de compra</h2>
+
+                <!-- DIV DESTINADO A RENDERS DE PRODUCTOS EN CARRITO.JS -->
+                <div id="checkout-products" class="checkout-products"></div>
+
+                <!--  DIV SUBTOTAL, ENVIO Y TOTAL -->
+                <div class="checkout-resume">
+                    <p>Subtotal: $ <span id="checkout-subtotal">0</span> UYU</p>
+                    <p>Envío: $ <span id="checkout-shipping">0</span> UYU</p>
+                    <p>Total: $ <span id="checkout-total">0</span> UYU</p>
+                </div>
+            </aside>
 
         </section>
     </main>
@@ -105,6 +222,6 @@
         </div>
 
     </footer>
-    
 </body>
+
 </html>
