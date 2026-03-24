@@ -11,7 +11,7 @@ const URL = "./db/data.json"
 //TRAER CARRITO GUARDADO EN LOCALSTORAGE
 let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
-// FUNCION OBTENER PRODUCTOS DEL JSON
+// FUNCION ASYNC PARA OBTENER PRODUCTOS DEL JSON
 function obtenerProductos() {
     fetch(URL)
         .then(response => response.json())
@@ -19,8 +19,15 @@ function obtenerProductos() {
             renderProductos(data)
             activarBtnAgregar(data);
         })
-        .catch(err => console.log("Ha ocurrido un error", err))
-        .finally(() => console.log("Finaliza la petición"))
+        .catch(err => {
+            Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: "No se pudieron cargar los productos."
+            });
+        })
+        .finally(() => {
+        });
 }
 
 //RENDER DE PRODUCTOS EN EL HOME
@@ -61,21 +68,32 @@ function activarBtnAgregar(listaProductos) {
 //AGREGAR PRODUCTO AL CARRITO
 function agregarAlCarrito(producto) {
     const productoExistente = carrito.find(productoCarrito => productoCarrito.id === producto.id);
-    //SUMO CANTIDAD SI EL PRODUCTO YA SE AGREGO AL CARRITO PREVIAMENTE 
+
     if (productoExistente) {
         productoExistente.cantidad++;
     } else {
         carrito.push({
             id: producto.id,
-            nombre:producto.nombre,
+            nombre: producto.nombre,
             precio: producto.precio,
             img: producto.img,
             info: producto.info,
             cantidad: 1
         });
     }
-    //LLAMO A FUNCIÓN PARA GUARDAR CARRITO EN LOCALSTORAGE
+
     guardarCarrito();
+
+    //NOTIFICACION AL AGREGAR AL CARRITO
+    Toastify({
+        text: `${producto.nombre} agregado al carrito`,
+        duration: 2000,
+        gravity: "top",
+        position: "right",
+        style: {
+            background: "#4CAF50"
+        }
+    }).showToast();
 }
 
 //GUARDAR CARRITO EN LOCALSTORAGE

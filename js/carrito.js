@@ -20,31 +20,19 @@ function guardarCarrito() {
 
 // CALCULAR TOTAL DEL CARRITO (PRECIO * CANTIDAD DE C/PRODUCTO AGREGADO)
 function calcularTotal() {
-    let total = 0;
-
-    carrito.forEach(producto => {
-        total = total + (producto.precio * producto.cantidad);
-    });
-
-    return total;
+    return carrito.reduce((total, producto) => total + (producto.precio * producto.cantidad), 0);
 }
 
 // RENDERIZAR PRODUCTOS DEL CARRITO
 function renderCarrito() {
     cartSection.innerHTML = "";
 
-    let carritoVacio = true;
-
-    carrito.forEach(() => {
-        carritoVacio = false;
-    });
-
     // SI EL CARRITO ESTA VACIO
-    if (carritoVacio) {
+    if (!carrito[0]) {
         cartSection.innerHTML = `<p class="cart-empty">Tu carrito está vacío.</p>`;
         cartTotal.innerText = "0";
 
-        // BTN "CONTINUAR CON LA COMPRA" INHABILITADO
+        // SI NO HAY PRODUCTOS: BTN "CONTINUAR CON LA COMPRA" INHABILITADO
         if (checkoutContainer) {
             checkoutContainer.style.display = "none";
         }
@@ -85,19 +73,18 @@ function renderCarrito() {
     activarBtnEliminar();
 }
 
-// BOTON SUMAR
+// BOTON SUMAR CANTIDAD EN CARRITO
 function activarBtnSumar() {
     const botonesSumar = document.querySelectorAll(".btn-sumar");
 
     botonesSumar.forEach(boton => {
         boton.addEventListener("click", () => {
             const idProducto = parseInt(boton.getAttribute("data-id"));
+            const productoEncontrado = carrito.find(producto => producto.id === idProducto);
 
-            carrito.forEach(producto => {
-                if (producto.id === idProducto) {
-                    producto.cantidad++;
-                }
-            });
+            if (productoEncontrado) {
+                productoEncontrado.cantidad++;
+            }
 
             guardarCarrito();
             renderCarrito();
@@ -105,19 +92,18 @@ function activarBtnSumar() {
     });
 }
 
-// BOTON RESTAR
+// BOTON RESTAR CANTIDAD EN CARRITO
 function activarBtnRestar() {
     const botonesRestar = document.querySelectorAll(".btn-restar");
 
     botonesRestar.forEach(boton => {
         boton.addEventListener("click", () => {
             const idProducto = parseInt(boton.getAttribute("data-id"));
+            const productoEncontrado = carrito.find(producto => producto.id === idProducto);
 
-            carrito.forEach(producto => {
-                if (producto.id === idProducto && producto.cantidad > 1) {
-                    producto.cantidad--;
-                }
-            });
+            if (productoEncontrado && productoEncontrado.cantidad > 1) {
+                productoEncontrado.cantidad--;
+            }
 
             guardarCarrito();
             renderCarrito();
@@ -201,27 +187,61 @@ function renderCheckout() {
     checkoutTotal.innerText = totalFinal;
 }
 
-// EVENTO "CHANGE" EN EL SELECT DEL DEPARTAMENTO
+// RECALCULAR COSTO DE ENVIO AL CAMBIAR EL DEPARTAMENTO
 function activarEnvioCheckout() {
     shippingDepto.addEventListener("change", () => {
         renderCheckout();
     });
 }
 
-//CONFIRMACION DE LA COMPRA
+// CALCULAR CANTIDAD TOTAL DE PRODUCTOS EN EL CARRITO PARA MOSTRAR EN RECIBO
+function calcularCantidadProductos() {
+    return carrito.reduce((total, producto) => total + producto.cantidad, 0);
+}
+
+// CONFIRMACION DE LA COMPRA
+
+// REVISAR SI TODOS LOS CAMPOS REQUIRED ESTAN COMPLETOS
+function revisarFormularioCheckout() {
+    const camposObligatorios = document.querySelectorAll("#checkout-form [required]");
+    let formularioCompleto = true;
+
+    camposObligatorios.forEach(campo => {
+        const datoCampo = campo.value.trim();
+
+        if (datoCampo === "") {
+            formularioCompleto = false;
+        }
+    });
+
+    btnPagar.disabled = !formularioCompleto;
+}
+
+// ACTIVAR REVISION DEL FORMULARIO
+function activarRevisionFormulario() {
+    const camposObligatorios = document.querySelectorAll("#checkout-form [required]");
+
+    camposObligatorios.forEach(campo => {
+        campo.addEventListener("input", revisarFormularioCheckout);
+        campo.addEventListener("change", revisarFormularioCheckout);
+    });
+
+    revisarFormularioCheckout();
+}
+
+// BOTON CONFIRMAR COMPRA
 function activarBotonCompra() {
-    //EVENTO "CLICK" EN CONFIRMAR LA COMPRA
-    const checkoutForm = document.getElementById("checkout-form");
+    btnPagar.addEventListener("click", () => {
 
-    checkoutForm.addEventListener("submit", (evento) => {
-
-        evento.preventDefault();
+        //EL BTN ESTÁ INHABILITADO HASTA QUE LOS CAMPOS "REQUIRED" SE COMPLETEN
+        if (btnPagar.disabled) {
+            return;
+        }
 
         const subtotal = calcularTotal();
         const envio = calcularEnvio();
         const totalFinal = subtotal + envio;
 
-        //CONFIRMACION CON ALERTA 
         Swal.fire({
             title: "¿Confirmar la compra?",
             text: `Total final: $${totalFinal} UYU`,
@@ -231,12 +251,19 @@ function activarBotonCompra() {
             cancelButtonText: "Cancelar"
         }).then((result) => {
             if (result.isConfirmed) {
+                const cantidadProductos = calcularCantidadProductos();
+
                 carrito = [];
                 guardarCarrito();
                 renderCheckout();
+                revisarFormularioCheckout();
 
                 Swal.fire({
                     title: "¡Compra realizada con éxito!",
+                    html: `
+                        <p>Productos: ${cantidadProductos}</p>
+                        <p>Envío: $${envio} UYU</p>
+                        <p>Total abonado: $${totalFinal} UYU</p>`,
                     icon: "success",
                     confirmButtonText: "Volver al inicio"
                 }).then(() => {
@@ -247,7 +274,7 @@ function activarBotonCompra() {
     });
 }
 
-// LLAMADOS FINALES SEGUN PAGINA
+// LLAMADOS FINALES SEGUN PAGINA: CARRITO O CHECKOUT
 if (mainCart) {
     activarBtnVaciar();
     renderCarrito();
@@ -256,7 +283,7 @@ if (mainCart) {
 if (mainCheckout) {
     activarEnvioCheckout();
     renderCheckout();
+    activarRevisionFormulario();
     activarBotonCompra();
 }
-
 
