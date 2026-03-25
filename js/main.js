@@ -40,12 +40,15 @@ function renderProductos(listaProductos) {
         //CLASE AL "DIV" CONTENEDOR DE LAS CARDS
         card.className = "product-card";
 
-        card.innerHTML = `<h2>ID: ${producto.id}</h2>
-                          <h3>Nombre: ${producto.nombre}</h3> 
-                          <h4>Precio: ${producto.precio}</h4>
-                          <img src="${producto.img}" alt="${producto.nombre}">
-                          <p>Info: ${producto.info}</p>
-                          <button class="btn-add" data-id="${producto.id}">Agregar al carrito</button>`;
+        card.innerHTML = `
+            <img src="${producto.img}" alt="${producto.nombre}">
+            <h3>${producto.nombre}</h3>
+            <p>${producto.info}</p>
+            <div class="product-card-bottom">
+                <button class="btn-add" data-id="${producto.id}">Agregar al carrito</button>
+                <h4>$${producto.precio} UYU</h4>
+            </div>`;
+
         productsContainer.appendChild(card)
     })
 }
@@ -91,7 +94,8 @@ function agregarAlCarrito(producto) {
         gravity: "top",
         position: "right",
         style: {
-            background: "#4CAF50"
+            background: "#90c9e9",
+            color: "#172640"
         }
     }).showToast();
 }

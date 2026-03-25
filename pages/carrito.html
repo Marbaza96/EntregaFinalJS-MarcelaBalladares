@@ -9,58 +9,83 @@
     <!-- LINK a CSS -->
     <link rel="stylesheet" href="../css/styles.css">
 
+    <!-- LINK PARA TIPOGRAFÍAS PERSONALIZADAS -->
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@300;400;600;800&display=swap"
+        rel="stylesheet">
+
     <!--LINK a JS -->
     <script defer src="../js/carrito.js"></script>
+
 </head>
 
-
 <body>
-    <header class="header">
-        <!-- SECCION HEADER -->
-        <section class="section-header">
+    <header class="header header-mini">
+        <section class="section-banner section-banner-mini">
 
             <!-- BANNER -->
-            <a class="banner">
-                <img src="../img/banner-glucon.png" alt="Banner de Glucon">
-            </a>
+            <img class="banner-bg" src="../img/banner-glucon.svg" alt="Banner principal de Glucon">
 
-            <!-- NAV MENU -->
-            <div class="div-nav">
+            <!-- CONTENIDO SOBRE BANNER -->
+            <div class="banner-top banner-top-mini">
+                <p class="banner-subtitle">SUMINISTROS PARA DIABÉTICOS</p>
+                <div class="banner-line"></div>
 
-                <nav>
-                    <ul>
-                        <li>
-                            <a href="../index.html">HOME</a>
-                        </li>
-                        <li>
-                            <a href="./carrito.html">MI CARRITO</a>
-                        </li>
-                    </ul>
-                </nav>
+                <div class="nav-icons">
+                    <a href="../index.html">
+                        <img src="../img/icono-home.svg" alt="Icono al inicio">
+                    </a>
+                    <a href="./carrito.html">
+                        <img src="../img/icono-carrito.svg" alt="Icono al carrito">
+                    </a>
+                </div>
             </div>
+
+            <!-- TITULO  -->
+            <div class="banner-content banner-content-mini">
+                <h1 class="banner-title banner-title-mini">GLUCON</h1>
+            </div>
+
         </section>
     </header>
 
-    <main id="main-cart">
-        <!-- SECCION CARRITO -->
+    <!-- MAIN EN CARRITO -->
 
-        <h1 class="page-title">CARRITO DE COMPRAS</h1>
+    <main id="main-cart" class="main-cart">
 
-        <section class="cart-section"></section>
+        <div class="cart-title-row">
+            <!-- SUBTITULO DE PAGINA -->
+            <h2 class="page-title">CARRITO DE COMPRAS</h2>
 
-        <!-- BTN "VOLVER A CATALOGO/HOME" Y BTN "VACIAR CARRITO"-->
-        <div class="cart-btn">
-            <a id="cart-btn-back" href="../index.html" type="button">Volver al Catálogo</a>
-            <button id="cart-btn-empty" type="button">Vaciar carrito</button>
-
-            <!-- TOTAL DEL CARRITO -->
-            <p class="cart-total">
-                Total: <span id="cart-total">0</span> UYU</p>
+            <!-- FLECHA PARA IR HACIA ABAJO -->
+            <a href="#cart-end" class="scroll-down">
+                <img src="../img/icono-up.svg" alt="Ir al total">
+            </a>
         </div>
 
-        <!-- BTN "CONTINUAR CON LA COMPRA" -->
-        <div id="checkout-container" class="checkout">
-            <a href="./checkout.html">Continuar con la compra</a>
+
+        <!-- SECCION DE PRODUCTOS AGREGADOS DESDE JS -->
+        <section class="cart-section"></section>
+
+        <!-- BOTONES Y TOTAL DEL CARRITO -->
+        <div id="cart-end" class="cart-actions-box">
+
+            <div class="cart-actions">
+                <div class="cart-actions-left">
+                    <a id="cart-btn-back" href="../index.html">Volver al catálogo</a>
+                    <button id="cart-btn-empty" type="button">Vaciar carrito</button>
+                </div>
+
+                <!-- TOTAL -->
+                <p class="cart-total">
+                    Total: <span id="cart-total">0</span> UYU
+                </p>
+            </div>
+
+            <!-- BOTON PARA CONTINUAR CON LA COMPRA -->
+            <div id="checkout-container" class="checkout">
+                <a href="./checkout.html">Continuar con la compra</a>
+            </div>
+
         </div>
 
     </main>
@@ -68,28 +93,32 @@
     <!-- FOOTER -->
     <footer class="footer">
 
+        <!-- IZQUIERDA -->
         <div class="footer-left">
-            <!-- ICONOS IZQ. - GOOGLE MAPS -->
-            <a href="https://www.google.com/maps/place/Departamento+de+Montevideo/@-34.8195175,-56.5572206,10z/data=!3m1!4b1!4m6!3m5!1s0x959f80ffc63bf7d3:0x686fbde87255a664!8m2!3d-34.8181587!4d-56.2138256!16zL20vMDlwMmQ5?entry=ttu&g_ep=EgoyMDI2MDIyNC4wIKXMDSoASAFQAw%3D%3D"
-                target="_blank">
-                <img class="footer-icon" src="../img/icono-maps.png" alt="Icono de ubicación Google Maps">
+            <a href="#" aria-label="Ubicación">
+                <img src="../img/icono-maps.png" alt="Ubicación">
             </a>
-            <!-- ICONOS IZQ. - WP -->
-            <a href="https://web.whatsapp.com/" target="_blank">
-                <img class="footer-icon" src="../img/icono-wp.png" alt="Icono de WhatsApp">
+            <a href="#" aria-label="WhatsApp">
+                <img src="../img/icono-wp.png" alt="WhatsApp">
             </a>
         </div>
 
-        <!-- TEXTOS EN FOOTER -->
+        <!-- CENTRO -->
         <div class="footer-center">
-            <p class="footer-text">Glucon - Suministros para diabéticos</p>
-            <p class="footer-text">Copyright © 2026 Glucon. Todos los derechos reservados.</p>
+            <p>Glucon - Suministros para diabéticos</p>
+            <p>© 2026 Glucon. Todos los derechos reservados.</p>
         </div>
 
-        <!-- ICONO "UP" EN FOOTER -->
+        <!-- DERECHA -->
         <div class="footer-right">
-            <a href="#main-cart">
-                <img src="../img/icono-up.png" alt="Icono de flecha hacia arriba para volver al inicio">
+            <a href="../index.html">
+                <img src="../img/icono-home.svg" alt="Home">
+            </a>
+            <a href="./pages/carrito.html">
+                <img src="../img/icono-carrito.svg" alt="Carrito">
+            </a>
+            <a href="#top">
+                <img src="../img/icono-up.svg" alt="Volver arriba">
             </a>
         </div>
 

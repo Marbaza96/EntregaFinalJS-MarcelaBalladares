@@ -52,16 +52,23 @@ function renderCarrito() {
 
         cartCard.innerHTML = `
             <img src="${producto.img}" alt="${producto.nombre}">
-            <h3>${producto.nombre}</h3>
-            <h4>Precio unitario: $${producto.precio} UYU</h4>
-            <p>Info: ${producto.info}</p>
-            <div class="cart-controls">
-                <button class="btn-restar" data-id="${producto.id}">-</button>
-                <p>Cantidad: ${producto.cantidad}</p>
-                <button class="btn-sumar" data-id="${producto.id}">+</button>
+
+            <div class="cart-card-info">
+                <h3>${producto.nombre}</h3>
+                <h4>Precio unitario: $${producto.precio} UYU</h4>
+                <p>${producto.info}</p>
+
+                <div class="cart-controls">
+                    <button class="btn-restar" data-id="${producto.id}">-</button>
+                    <p class="cart-cantidad">Cantidad: ${producto.cantidad}</p>
+                    <button class="btn-sumar" data-id="${producto.id}">+</button>
+                </div>
             </div>
-            <p>Subtotal: $${producto.precio * producto.cantidad} UYU</p>
-            <button class="btn-eliminar" data-id="${producto.id}">Eliminar</button>`;
+
+            <div class="cart-card-side">
+                <button class="btn-eliminar" data-id="${producto.id}">Eliminar</button>
+                <p class="cart-subtotal">Subtotal: $${producto.precio * producto.cantidad} UYU</p>
+            </div>`;
 
         cartSection.appendChild(cartCard);
     });
