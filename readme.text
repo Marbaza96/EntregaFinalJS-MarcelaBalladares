@@ -30,7 +30,7 @@ El sitio simula un proceso completo de compra online:
 
 -- Aclaraciones y detalles --
 
-1. En el archivo data.json, las rutas de las imágenes de cada producto fueron escritas con ../ para su funcionamiento tanto en index.html como en las pages.
+1. En el archivo data.json, las rutas de las imágenes de cada producto fueron escritas sin ruta específica (./ o ../) para su correcto funcionamiento tanto en index.html como en las pages y de forma local como en gitPages.
 
 2. Ejecución condicional según página (en carrito.js / línea 7,8,9):
    El archivo "carrito.js" es compartido entre la página de carrito y la de checkout.

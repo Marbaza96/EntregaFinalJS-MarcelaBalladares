@@ -54,7 +54,7 @@ function renderCarrito() {
         cartCard.className = "cart-card";
 
         cartCard.innerHTML = `
-            <img src="${producto.img}" alt="${producto.nombre}">
+            <img src="../${producto.img}" alt="${producto.nombre}">
 
             <div class="cart-card-info">
                 <h3>${producto.nombre}</h3>
@@ -182,7 +182,7 @@ function renderCheckout() {
         checkoutCard.className = "checkout-card";
 
         checkoutCard.innerHTML = `
-            <img src="${producto.img}" alt="${producto.nombre}">
+            <img src="../${producto.img}" alt="${producto.nombre}">
             <h3>${producto.nombre}</h3>
             <p>Cantidad: ${producto.cantidad}</p>
             <p>Subtotal: $${producto.precio * producto.cantidad} UYU</p>`;
