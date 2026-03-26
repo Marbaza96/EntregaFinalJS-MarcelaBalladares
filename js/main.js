@@ -85,6 +85,7 @@ function agregarAlCarrito(producto) {
         });
     }
 
+    //LLAMADO A FUNCION GUARDAR CARRITO EN L.S
     guardarCarrito();
 
     //NOTIFICACION AL AGREGAR AL CARRITO
@@ -95,7 +96,7 @@ function agregarAlCarrito(producto) {
         position: "right",
         style: {
             background: "#90c9e9",
-            color: "#172640"
+            color: "#010711",
         }
     }).showToast();
 }

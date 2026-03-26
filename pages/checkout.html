@@ -10,45 +10,51 @@
     <link rel="stylesheet" href="../css/styles.css">
 
     <!-- LINK PARA TIPOGRAFÍAS PERSONALIZADAS -->
-     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@300;400;600;800&display=swap"
+        rel="stylesheet">
 
     <!-- LIBRERIA SWEETALERT -->
-     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!-- LINK a JS -->
     <script defer src="../js/carrito.js"></script>
 </head>
 
-<body>
+<body id="top">
 
-    <!-- HEADER DEL CHECKOUT -->
-    <header class="header">
-        <!-- SECCION HEADER -->
-        <section class="section-header">
+    <!-- HEADER - CHECKOUT -->
+    <header class="header header-mini">
+        <section class="section-banner section-banner-mini">
 
             <!-- BANNER -->
-            <a class="banner">
-                <img src="../img/banner-glucon.png" alt="Banner de Glucon">
-            </a>
+            <img class="banner-bg" src="../img/banner-glucon.svg" alt="Banner principal de Glucon">
 
-            <!-- NAV MENU -->
-            <div class="div-nav">
-                <nav>
-                    <ul>
-                        <li>
-                            <a href="../index.html">HOME</a>
-                        </li>
-                        <li>
-                            <a href="./carrito.html">MI CARRITO</a>
-                        </li>
-                    </ul>
-                </nav>
+            <!-- SLOGAN + LINEA EN BANNER -->
+            <div class="banner-top banner-top-mini">
+                <p class="banner-subtitle">SUMINISTROS PARA DIABÉTICOS</p>
+                <div class="banner-line"></div>
+
+                <!-- MENU DE NAVEGACION -->
+                <div class="nav-icons">
+                    <a href="../index.html">
+                        <img src="../img/icono-home.svg" alt="Icono al inicio">
+                    </a>
+                    <a href="./carrito.html">
+                        <img src="../img/icono-carrito.svg" alt="Icono al carrito">
+                    </a>
+                </div>
             </div>
+
+            <!-- TITULO  -->
+            <div class="banner-content banner-content-mini">
+                <h1 class="banner-title banner-title-mini">GLUCON</h1>
+            </div>
+
         </section>
     </header>
 
-    <!-- MAIN DEL CHECKOUT -->
-    <main id="main-checkout">
+    <!-- MAIN - CHECKOUT -->
+    <main id="main-checkout" class="main-checkout">
 
         <h1 class="page-title">CHECKOUT</h1>
 
@@ -61,22 +67,23 @@
                 <div class="checkout-buyers">
 
                     <h2 class="page-subtitle">Datos del comprador</h2>
+                    <p class="rules">(*) CAMPOS OBLIGATORIOS</p>
 
                     <!-- CAMPOS A RELLENAR -->
-                    <label for="buyer-name">Nombre</label>
+                    <label for="buyer-name">Nombre *</label>
                     <input type="text" id="buyer-name" name="nombre" required title="Solo se permiten letras"
                         pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+" placeholder="Escribe tu nombre aquí">
 
-                    <label for="buyer-lastname">Apellido</label>
+                    <label for="buyer-lastname">Apellido *</label>
                     <input type="text" id="buyer-lastname" name="apellido" required title="Solo se permiten letras"
                         pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+" placeholder="Escribe tu apellido aquí">
 
-                    <label for="buyer-email">Correo electrónico</label>
+                    <label for="buyer-email">Correo electrónico *</label>
                     <input type="email" id="buyer-email" name="email" required placeholder="Ej: glucon@gmail.com">
 
-                    <label for="buyer-phone">Teléfono</label>
-                    <input type="text" id="buyer-phone" name="numero" inputmode="numeric" required
-                        pattern="[0-9]{8,15}" title="Solo se permiten números" placeholder="Ej: 099123456">
+                    <label for="buyer-phone">Teléfono *</label>
+                    <input type="text" id="buyer-phone" name="numero" inputmode="numeric" required pattern="[0-9]{8,15}"
+                        title="Solo se permiten números" placeholder="Ej: 099123456">
                 </div>
 
                 <!-- FORMULARIO DATOS DE ENVÍO -->
@@ -91,7 +98,7 @@
                     </p>
 
                     <!-- SELECCION DEL DEPARTAMENTO -->
-                    <label for="shipping-depto">Departamento</label>
+                    <label for="shipping-depto">Departamento *</label>
                     <select name="departamento" id="shipping-depto" required>
                         <option value="" selected disabled>Seleccionar departamento</option>
                         <option value="Montevideo">Montevideo</option>
@@ -107,11 +114,11 @@
                     </select>
 
                     <!-- SELECCION DE LA CIUDAD -->
-                    <label for="shipping-city">Ciudad</label>
+                    <label for="shipping-city">Ciudad *</label>
                     <input type="text" id="shipping-city" name="ciudad" required placeholder="Ej: Minas">
 
                     <!-- DIRECCION DEL ENVIO -->
-                    <label for="shipping-address">Dirección</label>
+                    <label for="shipping-address">Dirección *</label>
                     <input type="text" id="shipping-address" name="direccion" required
                         placeholder="Ej: Av Roosvelt 1234, apto 201">
 
@@ -127,12 +134,12 @@
                     <h2 class="page-subtitle">Datos de pago</h2>
 
                     <!-- NUMERO DE TARJETA -->
-                    <label for="card-number">Número de tarjeta</label>
+                    <label for="card-number">Número de tarjeta *</label>
                     <input type="text" id="card-number" name="tarjeta" required inputmode="numeric" maxlength="16"
                         pattern="[0-9]{16}" title="Debe contener 16 números" placeholder="Ej: 1234123412341234">
 
                     <!-- FECHA DE EXPIRACIÓN -->
-                    <label>Fecha de expiración</label>
+                    <label>Fecha de expiración *</label>
 
                     <div class="card-expiry">
 
@@ -164,7 +171,7 @@
                     </div>
 
                     <!-- CODIGO CVV DE LA TARJETA-->
-                    <label for="card-cvv">CVV</label>
+                    <label for="card-cvv">CVV *</label>
                     <input type="text" id="card-cvv" name="cvv" required inputmode="numeric" maxlength="3"
                         pattern="[0-9]{3}" title="Debe contener 3 números" placeholder="Ej: 123">
                 </div>
@@ -173,7 +180,7 @@
                 <div class="checkout-actions">
                     <a class="checkout-btn-back" href="./carrito.html">Volver al carrito</a>
                     <button id="checkout-btn-reset" type="reset">Resetear</button>
-                    <button id="checkout-btn-pay" type="button" disabled>Confirmar la compra</button>
+                    <button id="checkout-btn-pay" type="submit" disabled>Confirmar la compra</button>
                 </div>
 
             </form>
@@ -182,10 +189,10 @@
             <aside class="checkout-summary">
                 <h2 class="page-subtitle">Resumen de compra</h2>
 
-                <!-- DIV DESTINADO A RENDERS DE PRODUCTOS EN CARRITO.JS -->
+                <!-- DIV DESTINADO A RENDERS DE PRODUCTOS EN CARRITO JS -->
                 <div id="checkout-products" class="checkout-products"></div>
 
-                <!--  DIV SUBTOTAL, ENVIO Y TOTAL -->
+                <!--  DIV SUBTOTAL, ENVIO Y TOTAL DEL RESUMEN -->
                 <div class="checkout-resume">
                     <p>Subtotal: $ <span id="checkout-subtotal">0</span> UYU</p>
                     <p>Envío: $ <span id="checkout-shipping">0</span> UYU</p>
@@ -199,23 +206,23 @@
     <!-- FOOTER -->
     <footer class="footer">
 
-        <!-- IZQUIERDA -->
+        <!-- IZQUIERDA - REDES -->
         <div class="footer-left">
-            <a href="#" aria-label="Ubicación">
+            <a href="https://maps.app.goo.gl/WPaTHEoxA23RPMyh6" target="_blank" aria-label="Ubicación">
                 <img src="../img/icono-maps.png" alt="Ubicación">
             </a>
-            <a href="#" aria-label="WhatsApp">
+            <a href="https://web.whatsapp.com/" target="_blank" aria-label="WhatsApp">
                 <img src="../img/icono-wp.png" alt="WhatsApp">
             </a>
         </div>
 
-        <!-- CENTRO -->
+        <!-- CENTRO - TEXTO -->
         <div class="footer-center">
             <p>Glucon - Suministros para diabéticos</p>
             <p>© 2026 Glucon. Todos los derechos reservados.</p>
         </div>
 
-        <!-- DERECHA -->
+        <!-- DERECHA - ICONOS HOME/CARRITO/UP -->
         <div class="footer-right">
             <a href="../index.html">
                 <img src="../img/icono-home.svg" alt="Home">

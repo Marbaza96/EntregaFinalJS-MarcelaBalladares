@@ -1,9 +1,10 @@
+
 //PAGINA CARRITO Y CHECKOUT
 
 // CARRITO DESDE LOCALSTORAGE
 let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
-// CONST DEL DOM - IDENTIFICACION DE PAGINAS
+// CONST DEL DOM - IDENTIFICACION POR PAGINAS: CARRITO O CHECKOUT
 const mainCart = document.getElementById("main-cart");
 const mainCheckout = document.getElementById("main-checkout");
 
@@ -48,6 +49,8 @@ function renderCarrito() {
     //SE CREA UN "ARTICLE" PARA CADA PRODUCTO AGREGADO
     carrito.forEach(producto => {
         const cartCard = document.createElement("article");
+
+        //CLASE PARA CARDS EN CARRITO
         cartCard.className = "cart-card";
 
         cartCard.innerHTML = `
@@ -143,7 +146,9 @@ function activarBtnVaciar() {
     });
 }
 
-//PAGINA CHECKOUT
+// ------------------------------------------------------------------
+// PAGINA CHECKOUT
+//-------------------------------------------------------------------
 
 // CONST DEL DOM - PAG. CHECKOUT
 const checkoutProducts = document.getElementById("checkout-products");
@@ -152,6 +157,7 @@ const checkoutShipping = document.getElementById("checkout-shipping");
 const checkoutTotal = document.getElementById("checkout-total");
 const shippingDepto = document.getElementById("shipping-depto");
 const btnPagar = document.getElementById("checkout-btn-pay");
+const checkoutForm = document.getElementById("checkout-form");
 
 //FUNCION DEL COSTO DE ENVIO (MONTEVIDEO=$0 / INTERIOR=$250)
 function calcularEnvio() {
@@ -208,20 +214,9 @@ function calcularCantidadProductos() {
 
 // CONFIRMACION DE LA COMPRA
 
-// REVISAR SI TODOS LOS CAMPOS REQUIRED ESTAN COMPLETOS
+// REVISAR SI TODOS LOS CAMPOS "REQUIRED" ESTAN COMPLETOS
 function revisarFormularioCheckout() {
-    const camposObligatorios = document.querySelectorAll("#checkout-form [required]");
-    let formularioCompleto = true;
-
-    camposObligatorios.forEach(campo => {
-        const datoCampo = campo.value.trim();
-
-        if (datoCampo === "") {
-            formularioCompleto = false;
-        }
-    });
-
-    btnPagar.disabled = !formularioCompleto;
+    btnPagar.disabled = !checkoutForm.checkValidity();
 }
 
 // ACTIVAR REVISION DEL FORMULARIO
@@ -238,42 +233,89 @@ function activarRevisionFormulario() {
 
 // BOTON CONFIRMAR COMPRA
 function activarBotonCompra() {
-    btnPagar.addEventListener("click", () => {
-
-        //EL BTN ESTÁ INHABILITADO HASTA QUE LOS CAMPOS "REQUIRED" SE COMPLETEN
-        if (btnPagar.disabled) {
-            return;
-        }
+    checkoutForm.addEventListener("submit", (e) => {
+        e.preventDefault();
 
         const subtotal = calcularTotal();
         const envio = calcularEnvio();
         const totalFinal = subtotal + envio;
+        const cantidadProductos = calcularCantidadProductos();
 
+        //NOTIFICACION PARA CONFIRMAR COMPRA
         Swal.fire({
             title: "¿Confirmar la compra?",
-            text: `Total final: $${totalFinal} UYU`,
+            text: "Revisa los datos antes de continuar",
             icon: "question",
             showCancelButton: true,
             confirmButtonText: "Confirmar",
-            cancelButtonText: "Cancelar"
+            cancelButtonText: "Cancelar",
+            confirmButtonColor: "#ff6422",
+            cancelButtonColor: "#90c9e9"
         }).then((result) => {
+
             if (result.isConfirmed) {
-                const cantidadProductos = calcularCantidadProductos();
 
-                carrito = [];
-                guardarCarrito();
-                renderCheckout();
-                revisarFormularioCheckout();
+                //SE REUNE LA INFO A MOSTRAR EN EL RECIBO/COMPROBANTE
+                let detalleProductos = "";
 
+                carrito.forEach(prod => {
+                    detalleProductos += `
+                        <div style="display:grid; grid-template-columns: 1fr 60px 80px; align-items:center; margin-bottom:4px;">
+                            <span>${prod.nombre}</span>
+                            <span>x${prod.cantidad}</span>
+                            <span>$${prod.precio}</span>
+                        </div>`;
+                });
+
+                //SE NOTIFICA Y DA EL RECIBO
                 Swal.fire({
                     title: "¡Compra realizada con éxito!",
                     html: `
-                        <p>Productos: ${cantidadProductos}</p>
-                        <p>Envío: $${envio} UYU</p>
-                        <p>Total abonado: $${totalFinal} UYU</p>`,
+                        <p style="margin-bottom: 12px; text-align:center;">
+                            Gracias por tu compra en Glucon
+                        </p>
+
+                        <hr style="margin: 12px 0;">
+
+                        <div style="text-align:left; font-size: 14px;">
+
+                            <div style="display:grid; grid-template-columns: 1fr 60px 80px; align-items:center;">
+                                <span>Producto</span>
+                                <span>Cant.</span>
+                                <span>Precio</span>
+                            </div>
+
+                            <hr style="margin: 6px 0;">
+
+                            ${detalleProductos}
+
+                            <hr style="margin: 10px 0;">
+
+                            <p><strong>Subtotal:</strong> $${subtotal} UYU</p>
+                            <p><strong>Envío:</strong> $${envio} UYU</p>
+
+                            <hr style="margin: 10px 0;">
+
+                            <p style="font-size: 18px; font-weight: 900; text-align: center;">
+                                Total abonado: $${totalFinal} UYU
+                            </p>
+                        </div>
+
+                        <p style="margin-top: 12px; font-size: 12px; opacity: 0.7;">
+                            N° de orden: ${Date.now()}
+                        </p>
+
+                        <p style="margin-top: 10px; font-size: 13px; opacity: 0.75;">
+                            Recibirás el comprobante en tu correo electrónico.
+                        </p>`,
                     icon: "success",
-                    confirmButtonText: "Volver al inicio"
+                    confirmButtonText: "Volver al inicio",
+                    confirmButtonColor: "#ff6422"
                 }).then(() => {
+                    carrito = [];
+                    guardarCarrito();
+                    renderCheckout();
+                    revisarFormularioCheckout();
                     window.location.href = "../index.html";
                 });
             }
@@ -293,4 +335,3 @@ if (mainCheckout) {
     activarRevisionFormulario();
     activarBotonCompra();
 }
-

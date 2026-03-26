@@ -1,0 +1,67 @@
+
+-- GLUCON - Simulador Ecommerce de Suministros para Diabéticos --
+
+Proyecto desarrollado como entrega final del curso de JavaScript.
+
+--------------------------------------------------------------------
+
+-- Funcionamiento general (flujo de la web) --
+
+El sitio simula un proceso completo de compra online:
+
+1. Se obtienen los productos desde un archivo JSON local mediante fetch.
+2. Los productos se renderizan dinámicamente en el Home.
+3. El usuario puede agregar productos al carrito.
+4. El carrito se guarda en localStorage para mantener persistencia entre páginas.
+5. En la página de carrito:
+   - Se visualizan los productos agregados.
+   - Se pueden sumar/restar cantidades.
+   - Se pueden eliminar productos.
+   - Se calcula el total dinámicamente.
+6. En la página de checkout:
+   - Se completa un formulario con datos del comprador.
+   - Se selecciona tipo de envío (afecta el costo).
+   - Se muestra un resumen de compra.
+7. Al confirmar:
+   - Se muestra una notificación con SweetAlert.
+   - Se vacía el carrito.
+
+--------------------------------------------------------------------
+
+-- Aclaraciones y detalles --
+
+1. En el archivo data.json, las rutas de las imágenes de cada producto fueron escritas con ../ para su funcionamiento tanto en index.html como en las pages.
+
+2. Ejecución condicional según página (en carrito.js / línea 7,8,9):
+   El archivo "carrito.js" es compartido entre la página de carrito y la de checkout.
+   Para evitar errores y ejecutar solo el código correspondiente a cada página, se identifica en qué página se está mediante elementos del DOM:
+
+    | const mainCart = document.getElementById("main-cart");
+    | const mainCheckout = document.getElementById("main-checkout");
+
+   Luego, al final de "carrito.js" se ejecutan diferentes funciones principales según la página detectada:
+
+    | if (mainCart) - Página Carrito
+    | if (mainCheckout) - Página Checkout  
+
+3. Validación del formulario en tiempo real (carrito.js / línea 217 a 219):
+   Se utiliza el método "checkValidity()" para verificar automáticamente si todos los campos con atributos como required, pattern, etc. son válidos.
+   Si hay algún campo incompleto o incorrecto, devuelve "false".
+   Si todo está correcto, devuelve "true".
+   Con esto se logra que, si el formulario no es válido, el btn de "Confirmar la compra" permanezca desactivado. 
+   Si todos los campos de form son válidos, se habilita dicho botón.
+
+4. Control del envío del formulario con preventDefault() (carrito.js / línea 236,237):
+
+   Se utiliza "e.preventDefault()" dentro del evento "submit" para evitar el comportamiento por defecto del formulario (recargar la página).
+   Permitiendo manejar todo el proceso de confirmación de compra desde JS, incluyendo:
+
+   - Cálculo del subtotal
+   - Cálculo del costo de envío
+   - Obtención del total final
+   - Cálculo de la cantidad de productos
+
+   De esta manera, se puede controlar el flujo completo de la compra y mostrar una confirmación mediante SweetAlert, sin necesidad de recargar la página.
+
+--------------------------------------------------------------------
+
